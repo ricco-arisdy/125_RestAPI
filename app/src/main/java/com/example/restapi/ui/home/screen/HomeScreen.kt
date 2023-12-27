@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.restapi.R
 import com.example.restapi.model.Kontak
 import com.example.restapi.ui.PenyediaViewModel
 import com.example.restapi.ui.home.viewmodel.KontakUIState
