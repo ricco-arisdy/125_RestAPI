@@ -57,7 +57,19 @@ fun HomeStatus(
     onDeleteClick: (Kontak) -> Unit = {},
     onDetailClick: (Int) -> Unit
 ) {
-
+    when (kontakUIState) {
+        is KontakUIState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+        is KontakUIState.Success -> KontakLayout(
+            kontak = kontakUIState.kontak, modifier = modifier.fillMaxWidth(),
+            onDetailClick = {
+                onDetailClick(it.id)
+            },
+            onDeleteClick = {
+                onDeleteClick(it)
+            }
+        )
+        is KontakUIState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
 
 }
 
