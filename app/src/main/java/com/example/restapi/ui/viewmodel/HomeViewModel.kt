@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.restapi.model.Kontak
 import com.example.restapi.repository.KontakRepository
+import com.example.restapi.ui.home.viewmodel.KontakUIState
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -17,8 +18,8 @@ sealed class KontakUiState {
 }
 
 class HomeViewModel(private val kontakRepository: KontakRepository) : ViewModel() {
-    var kontakUiState: KontakUiState by mutableStateOf(KontakUiState.Loading)
-        private set
+    var kontakUIState: KontakUIState by mutableStateOf(KontakUIState.Loading)
+    private set
 
     init {
         getKontak()
@@ -26,13 +27,24 @@ class HomeViewModel(private val kontakRepository: KontakRepository) : ViewModel(
 
     fun getKontak() {
         viewModelScope.launch {
-            kontakUiState = KontakUiState.Loading
-            kontakUiState = try {
-                KontakUiState.Success(kontakRepository.getKontak())
+            kontakUIState = KontakUIState.Loading
+            kontakUIState = try {
+                KontakUIState.Success(kontakRepository.getKontak())
             } catch (e: IOException) {
-                KontakUiState.Error
+                KontakUIState.Error
             } catch (e: HttpException) {
-                KontakUiState.Error
+                KontakUIState.Error
+            }
+        }
+    }
+    fun deleteKontak(id: Int) {
+        viewModelScope.launch {
+            try {
+                kontakRepository.deleteKontak(id)
+            } catch (e: IOException) {
+                KontakUIState.Error
+            } catch (e: HttpException) {
+                KontakUIState.Error
             }
         }
     }

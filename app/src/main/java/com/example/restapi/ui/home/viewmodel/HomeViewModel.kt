@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
+
 sealed class KontakUIState {
     data class Success(val kontak: List<Kontak>) : KontakUIState()
     object Error : KontakUIState()
@@ -18,8 +19,8 @@ sealed class KontakUIState {
 }
 
 class HomeViewModel(private val kontakRepository: KontakRepository) : ViewModel() {
-    var kontakUIState: KontakUIState by mutableStateOf(KontakUIState.Loading)
-        private set
+   var kontakUIState: KontakUIState by mutableStateOf(KontakUIState.Loading)
+       private set
 
     init {
         getKontak()
@@ -37,8 +38,7 @@ class HomeViewModel(private val kontakRepository: KontakRepository) : ViewModel(
             }
         }
     }
-
-    fun deleteKontak(id: Int) {
+    fun deleteKontak(id: Int){
         viewModelScope.launch {
             try {
                 kontakRepository.deleteKontak(id)
