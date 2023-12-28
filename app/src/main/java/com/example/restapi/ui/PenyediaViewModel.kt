@@ -5,15 +5,20 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.restapi.KontakApplication
+import com.example.restapi.ui.kontak.viewmodel.InsertViewModel
 import com.example.restapi.ui.viewmodel.HomeViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
         initializer {
-            HomeViewModel(aplikasiMars().container.kontakRepository)
+            HomeViewModel(apkikasiKontak().container.kontakRepository)
+        }
+
+        initializer {
+            InsertViewModel(apkikasiKontak().container.kontakRepository)
         }
     }
 }
 
-fun CreationExtras.aplikasiMars(): KontakApplication =
+fun CreationExtras.apkikasiKontak(): KontakApplication =
     (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as KontakApplication)
